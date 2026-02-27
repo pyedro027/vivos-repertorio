@@ -976,3 +976,16 @@ body:has(.modal:not(.hidden)) {
 .modal-content {
   padding-bottom: 110px;
 }
+
+/* =========================
+   AJUSTE POSIÇÃO BOTÕES FLUTUANTES
+   ========================= */
+
+.detail-actions {
+  bottom: 8px !important; /* desce mais */
+}
+
+/* aumenta espaço interno do modal para não cobrir conteúdo */
+.modal-content {
+  padding-bottom: 140px !important;
+}
