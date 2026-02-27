@@ -636,3 +636,88 @@ h1 {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* =========================
+   PATCH: "CARDS" PREMIUM NOS NOMES (labels) DOS TONS
+   (não mexe em JS/HTML)
+   ========================= */
+
+/* deixa cada campo como um mini-card */
+.key-field {
+  padding: 10px 10px 12px;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.70),
+    rgba(255, 255, 255, 0.42)
+  );
+  border: 1px solid rgba(47, 122, 95, 0.14);
+  box-shadow:
+    0 14px 34px rgba(47, 72, 58, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.70);
+  backdrop-filter: blur(10px);
+}
+
+/* a “placa” do nome vira um cardzinho com brilho elegante */
+.key-field label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+
+  padding: 8px 12px;
+  border-radius: 999px;
+
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  color: #123125;
+
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.75), transparent 55%),
+    linear-gradient(135deg, rgba(47,122,95,0.16), rgba(120,214,176,0.08));
+
+  border: 1px solid rgba(47, 122, 95, 0.16);
+
+  box-shadow:
+    0 10px 22px rgba(47, 72, 58, 0.10),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+/* um “selo” discreto na ponta, dá sensação de design de produto */
+.key-field label::after {
+  content: "";
+  margin-left: 10px;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+
+  background: radial-gradient(circle at 35% 35%, #fff, rgba(120,214,176,0.95));
+  box-shadow:
+    0 0 0 3px rgba(47,122,95,0.10),
+    0 10px 18px rgba(47,72,58,0.12);
+}
+
+/* input mais “encaixado” no card, mantendo seu estilo */
+.key-field input {
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.key-field input:focus {
+  border-color: rgba(47, 122, 95, 0.75);
+}
+
+/* hover suave no card, sem exagero */
+@media (hover: hover) {
+  .key-field:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 18px 44px rgba(47, 72, 58, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    border-color: rgba(47, 122, 95, 0.20);
+  }
+}
