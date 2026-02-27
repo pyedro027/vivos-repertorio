@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vivos com Cristo — Repertório</title>
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- FUNDO ANIMADO -->
+  <div class="bg-fx"></div>
+
+  <header class="app-header">
+    <div class="brand-wrap">
+
+      <!-- Mantidos para não quebrar JS -->
+      <img id="brandLogo" class="brand-logo" src="assets/logo.png" alt="Logo">
+      <div id="brandFallback" class="brand-fallback">VC</div>
+
+      <div class="brand-text">
+        <h1>Vivos com Cristo</h1>
+        <p>Repertório</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+
+    <section class="controls glass-card">
+      <input id="searchInput" class="input-text" type="text" placeholder="Buscar música..." />
+
+      <div class="action-row">
+        <button id="addSongBtn" class="btn btn-primary">+ Adicionar música</button>
+        <button id="bulkImportBtn" class="btn btn-soft">Importar (colar texto)</button>
+      </div>
+    </section>
+
+    <section class="list-wrap">
+      <div class="list-header">
+        <h2>Músicas</h2>
+        <span id="songCount" class="result-count">0</span>
+      </div>
+
+      <ul id="songsList" class="songs-list"></ul>
+      <p id="emptyState" class="empty-state">Nenhuma música encontrada.</p>
+    </section>
+
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <!-- MODAL ADICIONAR -->
+  <div id="songModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="icon-close" data-close="songModal">×</button>
+      <h3>Adicionar música</h3>
+      <input id="newSongTitle" class="input-text" type="text" />
+      <button id="confirmAddSong" class="btn btn-primary full">Salvar</button>
+    </div>
+  </div>
+
+  <!-- MODAL IMPORTAR -->
+  <div id="importModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="icon-close" data-close="importModal">×</button>
+      <h3>Importação em massa</h3>
+      <textarea id="bulkText" class="input-textarea" rows="10"></textarea>
+      <label class="checkbox-wrap">
+        <input id="stripNumbers" type="checkbox" />
+        Remover numeração
+      </label>
+      <button id="confirmImport" class="btn btn-primary full">Importar</button>
+      <pre id="importSummary" class="import-summary"></pre>
+    </div>
+  </div>
+
+  <!-- MODAL DETALHES -->
+  <div id="detailModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="icon-close" data-close="detailModal">×</button>
+      <h3 id="detailTitle">Detalhes</h3>
+      <div id="keyFields" class="key-grid"></div>
+
+      <div class="detail-actions">
+        <button id="saveAllKeys" class="btn btn-primary">Salvar</button>
+        <button id="deleteSongBtn" class="btn btn-danger">Excluir música</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    window.SUPABASE_URL = "https://wkjbhumyexkbuabklenj.supabase.co";
+    window.SUPABASE_ANON_KEY = "sb_publishable_vY4R-ChreoZ4IX7dNkd0Bg_psvzEx7G";
+  </script>
+
+  <script src="supabaseClient.js"></script>
+  <script src="app.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
