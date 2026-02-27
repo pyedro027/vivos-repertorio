@@ -721,3 +721,43 @@ h1 {
     border-color: rgba(47, 122, 95, 0.20);
   }
 }
+
+/* =========================
+   PATCH MOBILE – BOTÕES VISÍVEIS NO MODAL
+   ========================= */
+
+/* permite rolagem interna no modal no celular */
+.modal-content {
+  max-height: 90vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* deixa os botões sempre visíveis no final */
+.detail-actions {
+  position: sticky;
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(255,255,255,0.95),
+    rgba(255,255,255,0.85)
+  );
+  padding-top: 12px;
+  padding-bottom: 8px;
+  margin-top: 18px;
+  z-index: 5;
+}
+
+/* melhora clique no celular */
+.detail-actions .btn {
+  flex: 1;
+  min-height: 48px;
+  font-size: 0.95rem;
+}
+
+/* garante espaço extra no final para não cortar */
+.modal-content::after {
+  content: "";
+  display: block;
+  height: 12px;
+}
