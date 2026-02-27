@@ -11,17 +11,21 @@
 
   --card: rgba(255, 255, 255, 0.72);
   --shadow: 0 18px 38px rgba(47, 72, 58, 0.16);
-  --shadow-strong: 0 26px 60px rgba(47, 72, 58, 0.22);
   --radius: 16px;
 
-  /* foco */
+  /* extras */
   --ring: 0 0 0 4px rgba(47, 122, 95, 0.18);
+  --shadow-strong: 0 26px 60px rgba(47, 72, 58, 0.22);
 
   /* glows */
   --glow-purple: rgba(47, 122, 95, 0.42);
   --glow-cyan: rgba(120, 214, 176, 0.35);
   --glow-pink: rgba(255, 196, 170, 0.30);
   --glow-gold: rgba(255, 214, 165, 0.28);
+
+  /* Dock interno do modal */
+  --dock-h: 88px;           /* altura do dock */
+  --dock-gap: 14px;         /* espaço em volta */
 }
 
 * { box-sizing: border-box; }
@@ -36,9 +40,9 @@ body {
   overflow-x: hidden;
 }
 
-/* =========================================================
-   FUNDO (página)
-   ========================================================= */
+/* =========================
+   FUNDO CHAMATIVO (página)
+   ========================= */
 body::before {
   content: "";
   position: fixed;
@@ -46,6 +50,7 @@ body::before {
   pointer-events: none;
   z-index: 0;
   opacity: 0.75;
+
   background:
     radial-gradient(circle at 12% 25%, rgba(255,255,255,0.75), transparent 10%),
     radial-gradient(circle at 18% 68%, rgba(255,255,255,0.55), transparent 12%),
@@ -55,6 +60,7 @@ body::before {
     radial-gradient(circle at 70% 52%, rgba(47, 122, 95, 0.20), transparent 24%),
     radial-gradient(circle, rgba(255,255,255,0.65) 1px, transparent 2px),
     radial-gradient(circle, rgba(255,255,255,0.45) 1px, transparent 2px);
+
   background-size:
     420px 420px,
     520px 520px,
@@ -64,16 +70,14 @@ body::before {
     760px 760px,
     180px 180px,
     220px 220px;
-  background-position:
-    0 0, 0 0, 0 0, 0 0,
-    0 0, 0 0, 0 0, 0 0;
+
   filter: blur(0.2px);
   animation: sparklesMove 10s linear infinite;
   mix-blend-mode: screen;
 }
 
 @keyframes sparklesMove {
-  0%   { transform: translate3d(0, 0, 0); }
+  0% { transform: translate3d(0, 0, 0); }
   100% { transform: translate3d(-40px, 28px, 0); }
 }
 
@@ -84,16 +88,17 @@ body::after {
   pointer-events: none;
   z-index: 0;
   opacity: 0.10;
+
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
   mix-blend-mode: multiply;
   animation: grainMove 7s steps(2) infinite;
 }
 
 @keyframes grainMove {
-  0%   { transform: translate(0, 0); }
-  25%  { transform: translate(-1.2%, 1%); }
-  50%  { transform: translate(1%, -1.1%); }
-  75%  { transform: translate(-0.8%, -0.6%); }
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-1.2%, 1%); }
+  50% { transform: translate(1%, -1.1%); }
+  75% { transform: translate(-0.8%, -0.6%); }
   100% { transform: translate(0, 0); }
 }
 
@@ -102,11 +107,13 @@ body::after {
   inset: -35%;
   pointer-events: none;
   z-index: 0;
+
   background:
     radial-gradient(circle at 20% 30%, var(--glow-purple), transparent 36%),
     radial-gradient(circle at 78% 35%, var(--glow-cyan), transparent 36%),
     radial-gradient(circle at 50% 73%, var(--glow-pink), transparent 34%),
     radial-gradient(circle at 85% 75%, var(--glow-gold), transparent 35%);
+
   filter: saturate(120%);
   opacity: 0.95;
   animation: drift 9s ease-in-out infinite alternate;
@@ -126,7 +133,7 @@ body::after {
 }
 
 .aurora::before { animation: blobA 6s ease-in-out infinite alternate; }
-.aurora::after  { animation: blobB 7.5s ease-in-out infinite alternate; opacity: 0.75; }
+.aurora::after { animation: blobB 7.5s ease-in-out infinite alternate; opacity: 0.75; }
 
 @keyframes drift {
   0% { transform: translate3d(0, 0, 0) scale(1); }
@@ -142,13 +149,12 @@ body::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .aurora, .aurora::before, .aurora::after,
-  body::before, body::after { animation: none !important; }
+  .aurora, .aurora::before, .aurora::after, body::before, body::after { animation: none !important; }
 }
 
-/* =========================================================
-   CONTEÚDO (acima do fundo)
-   ========================================================= */
+/* =========================
+   CONTEÚDO
+   ========================= */
 .app-header,
 .app-main {
   width: min(980px, 92vw);
@@ -157,6 +163,7 @@ body::after {
   z-index: 1;
 }
 
+/* ===== HEADER ===== */
 .app-header {
   margin-top: 22px;
   padding: 16px;
@@ -183,9 +190,11 @@ body::after {
   background: rgba(255, 255, 255, 0.52);
   border: 1px solid rgba(47, 122, 95, 0.18);
   backdrop-filter: blur(10px);
+
   box-shadow:
     0 16px 34px rgba(47, 72, 58, 0.18),
     0 0 0 6px rgba(255, 255, 255, 0.26);
+
   filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.12));
 }
 
@@ -225,9 +234,9 @@ h1 {
   border: 1px solid rgba(255, 255, 255, 0.55);
 }
 
-/* =========================================================
+/* =========================
    CONTROLES
-   ========================================================= */
+   ========================= */
 .controls { padding: 16px; }
 
 .input-label {
@@ -250,7 +259,9 @@ h1 {
 }
 
 .input-text::placeholder,
-.input-textarea::placeholder { color: rgba(111, 115, 104, 0.85); }
+.input-textarea::placeholder {
+  color: rgba(111, 115, 104, 0.85);
+}
 
 .input-text:focus,
 .input-textarea:focus {
@@ -270,9 +281,9 @@ h1 {
   gap: 10px;
 }
 
-/* =========================================================
+/* =========================
    BOTÕES
-   ========================================================= */
+   ========================= */
 .btn {
   border: 0;
   border-radius: 12px;
@@ -343,9 +354,9 @@ h1 {
   transform: translateY(-1px);
 }
 
-/* =========================================================
+/* =========================
    LISTA
-   ========================================================= */
+   ========================= */
 .list-wrap { padding: 16px; }
 
 .list-header {
@@ -403,25 +414,23 @@ h1 {
   padding: 18px 0 6px;
 }
 
-/* =========================================================
-   MODAL (rolagem correta + brilho)
-   ========================================================= */
-.hidden { display: none !important; }
-
+/* =========================
+   MODAL (scroll interno + dock interno)
+   ========================= */
 .modal {
   position: fixed;
   inset: 0;
   z-index: 50;
-
   display: grid;
   place-items: center;
   padding: 14px;
-
   background: rgba(25, 20, 46, 0.45);
   overflow: hidden;
 }
 
-/* brilho animado atrás do conteúdo do modal */
+.hidden { display: none !important; }
+
+/* brilho animado no fundo do modal */
 .modal::before {
   content: "";
   position: absolute;
@@ -455,26 +464,22 @@ h1 {
 
   padding: 18px;
 
-  /* rolagem por dentro */
   max-height: 92vh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
 
-  /* segura o conteúdo pra não “bater” no dock */
-  scroll-padding-bottom: 140px;
+  /* RESERVA real pro dock interno */
+  padding-bottom: calc(var(--dock-h) + var(--dock-gap) + env(safe-area-inset-bottom, 0px) + 24px);
+  scroll-padding-bottom: calc(var(--dock-h) + var(--dock-gap) + 24px);
 }
 
-.modal-content.large {
-  width: min(740px, 96vw);
-}
+.modal-content.large { width: min(740px, 96vw); }
 
-/* botão fechar não briga com scroll */
 .icon-close {
   position: sticky;
   top: 8px;
   margin-left: auto;
-
   display: grid;
   place-items: center;
 
@@ -496,7 +501,6 @@ h1 {
   box-shadow: 0 10px 22px rgba(47, 72, 58, 0.12);
   transform: translateY(-1px);
 }
-
 .icon-close:active { transform: translateY(0px); }
 
 .hint { color: var(--muted); margin: 8px 0 12px; }
@@ -521,9 +525,9 @@ h1 {
   min-height: 62px;
 }
 
-/* =========================================================
-   TONS (cards nos nomes + inputs)
-   ========================================================= */
+/* =========================
+   TONS (CARDS premium)
+   ========================= */
 .key-grid {
   margin-top: 14px;
   display: grid;
@@ -559,10 +563,13 @@ h1 {
   text-transform: uppercase;
 
   color: #123125;
+
   background:
     radial-gradient(circle at 20% 20%, rgba(255,255,255,0.75), transparent 55%),
     linear-gradient(135deg, rgba(47,122,95,0.16), rgba(120,214,176,0.08));
+
   border: 1px solid rgba(47, 122, 95, 0.16);
+
   box-shadow:
     0 10px 22px rgba(47, 72, 58, 0.10),
     inset 0 1px 0 rgba(255,255,255,0.8);
@@ -612,40 +619,55 @@ h1 {
   }
 }
 
-/* =========================================================
-   DOCK DOS BOTÕES (flutuante sem cobrir)
-   ========================================================= */
+/* =========================
+   DOCK FLUTUANTE DENTRO DO MODAL (A opção A)
+   ========================= */
+
+/* o container vira "âncora" pro dock */
+.modal-content { position: relative; }
+
+/* dock */
 .detail-actions {
-  /* Sticky = “flutua” mas faz parte do layout do modal */
   position: sticky;
-  bottom: 0;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 0px);
   z-index: 5;
 
   display: flex;
   gap: 14px;
 
-  /* sem moldura branca; só uma aura suave */
-  padding: 14px 0 calc(10px + env(safe-area-inset-bottom, 0px));
-  margin-top: 14px;
+  margin-top: 16px;
+
+  /* visual de dock sem "moldura branca" pesada */
+  padding: 10px 0 0;
+}
+
+/* cria um "fade" suave no fundo do dock sem parecer moldura */
+.detail-actions::before {
+  content: "";
+  position: sticky;
+  bottom: 0;
+  display: block;
+  height: calc(var(--dock-h) + 8px);
+  margin-bottom: calc(-1 * (var(--dock-h) + 8px));
+  pointer-events: none;
 
   background: linear-gradient(
     to top,
-    rgba(255, 255, 255, 0.92),
-    rgba(255, 255, 255, 0.35),
-    rgba(255, 255, 255, 0.0)
+    rgba(255,255,255,0.98),
+    rgba(255,255,255,0.78),
+    rgba(255,255,255,0)
   );
-
-  backdrop-filter: blur(12px);
-  border: 0;
-  box-shadow: none;
+  border-radius: 18px;
 }
 
+/* botões maiores e com sombra individual */
 .detail-actions .btn {
   flex: 1;
   min-height: 54px;
   font-size: 1rem;
   font-weight: 800;
   border-radius: 16px;
+
   box-shadow:
     0 18px 40px rgba(0,0,0,0.18),
     0 8px 20px rgba(47,122,95,0.18);
@@ -653,9 +675,9 @@ h1 {
 
 .detail-actions .btn:active { transform: scale(0.985); }
 
-/* =========================================================
+/* =========================
    TOAST
-   ========================================================= */
+   ========================= */
 .toast {
   position: fixed;
   left: 50%;
@@ -672,9 +694,6 @@ h1 {
 
 .toast.show { transform: translateX(-50%) translateY(0); }
 
-/* =========================================================
-   RESPONSIVO
-   ========================================================= */
 @media (min-width: 760px) {
   .key-grid { grid-template-columns: 1fr 1fr; }
 }
