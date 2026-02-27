@@ -989,3 +989,65 @@ body:has(.modal:not(.hidden)) {
 .modal-content {
   padding-bottom: 140px !important;
 }
+
+/* =========================
+   FIX FINAL (MOBILE)
+   - Botões flutuantes NÃO cobrem o último campo
+   - Respeita safe-area (barra do celular)
+   - Não muda JS/HTML
+   ========================= */
+
+:root{
+  --actions-height: 92px; /* espaço reservado pros botões */
+}
+
+/* mantém flutuando, mas colado no fundo real do celular */
+.detail-actions{
+  position: fixed !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+
+  /* desce de verdade (safe-area + margem) */
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 10px) !important;
+
+  width: min(560px, 92vw) !important;
+  display: flex !important;
+  gap: 14px !important;
+
+  z-index: 9999 !important;
+  margin: 0 !important;
+
+  /* sem “moldura” */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  padding: 0 !important;
+}
+
+/* cada botão com sombra própria (sem container branco) */
+.detail-actions .btn{
+  flex: 1 !important;
+  min-height: 54px !important;
+  font-size: 1rem !important;
+  font-weight: 800 !important;
+  border-radius: 16px !important;
+
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.18),
+    0 8px 20px rgba(47,122,95,0.18) !important;
+}
+
+/* o pulo do gato:
+   reserva espaço DENTRO do modal pra nada ficar embaixo dos botões */
+.modal-content{
+  padding-bottom: calc(var(--actions-height) + env(safe-area-inset-bottom, 0px) + 40px) !important;
+}
+
+/* garante que o modal role por dentro (e não o fundo) */
+.modal-content{
+  max-height: 92vh !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
+}
