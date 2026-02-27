@@ -761,3 +761,45 @@ h1 {
   display: block;
   height: 12px;
 }
+
+/* =========================
+   FUNDO ANIMADO BRILHANTE NO MODAL
+   (não altera nada existente)
+   ========================= */
+
+.modal {
+  overflow: hidden;
+}
+
+/* camada brilhante animada */
+.modal::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  z-index: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at 20% 30%, rgba(120,214,176,0.35), transparent 40%),
+    radial-gradient(circle at 80% 40%, rgba(47,122,95,0.30), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(255,214,165,0.25), transparent 45%);
+
+  filter: blur(60px);
+  animation: modalGlowMove 8s ease-in-out infinite alternate;
+}
+
+/* garante que o conteúdo fique acima do brilho */
+.modal-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* animação suave */
+@keyframes modalGlowMove {
+  0% {
+    transform: translate3d(0,0,0) scale(1);
+  }
+  100% {
+    transform: translate3d(-3%,2%,0) scale(1.08);
+  }
+}
