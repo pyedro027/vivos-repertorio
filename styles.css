@@ -703,3 +703,23 @@ h1 {
 @media (min-width: 760px) {
   .key-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* ===== FIX DEFINITIVO: conteúdo nunca fica atrás dos botões flutuantes ===== */
+
+/* aumenta a “reserva” no final do modal (pra não cobrir o último campo) */
+:root{
+  --actions-h: 170px; /* era menor; agora garante folga */
+}
+
+/* reserva espaço real + melhora o scroll quando foca nos inputs */
+.modal-content{
+  padding-bottom: calc(var(--actions-h) + env(safe-area-inset-bottom, 0px) + 40px) !important;
+  scroll-padding-bottom: calc(var(--actions-h) + 40px);
+}
+
+/* quando toca no input, ele automaticamente fica acima dos botões */
+.modal-content input,
+.modal-content textarea,
+.modal-content select{
+  scroll-margin-bottom: calc(var(--actions-h) + 40px);
+}
