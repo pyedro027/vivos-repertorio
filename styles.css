@@ -170,7 +170,7 @@ body::after {
 
 .app-header,
 .app-main {
-  width: min(960px, 92vw);
+  width: min(980px, 92vw);
   margin-inline: auto;
   position: relative;
   z-index: 1;
@@ -178,7 +178,7 @@ body::after {
 
 /* ===== HEADER ===== */
 .app-header {
-  margin-top: 20px;
+  margin-top: 22px;
   padding: 16px;
 }
 
@@ -231,7 +231,7 @@ p {
 }
 
 h1 {
-  font-size: 1.28rem;
+  font-size: 1.32rem;
   letter-spacing: -0.02em;
 }
 
@@ -241,7 +241,7 @@ h1 {
 }
 
 .app-main {
-  padding-block: 18px 36px;
+  padding-block: 18px 40px;
   display: grid;
   gap: 16px;
 }
@@ -251,7 +251,7 @@ h1 {
   backdrop-filter: blur(12px);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.55);
 }
 
 /* =========================
@@ -273,22 +273,28 @@ h1 {
 .input-textarea {
   width: 100%;
   border: 1px solid #d8e0d6;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.88);
   color: var(--text);
   border-radius: 12px;
   padding: 12px 14px;
   outline: none;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.12s ease, filter 0.2s ease;
+}
+
+.input-text::placeholder,
+.input-textarea::placeholder {
+  color: rgba(111, 115, 104, 0.85);
 }
 
 .input-text:focus,
 .input-textarea:focus {
-  border-color: var(--primary);
+  border-color: rgba(47, 122, 95, 0.7);
   box-shadow: var(--ring);
 }
 
 .input-text:focus {
   transform: translateY(-1px);
+  filter: brightness(1.01);
 }
 
 .action-row {
@@ -415,17 +421,18 @@ h1 {
   width: 100%;
   text-align: left;
   border: 1px solid #dde6dc;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.84);
   padding: 12px;
   border-radius: 12px;
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.12s ease, box-shadow 0.2s ease, border-color 0.2s ease, filter 0.2s ease;
 }
 
 .songs-list li button:hover {
   transform: translateY(-1px);
   border-color: rgba(47, 122, 95, 0.32);
   box-shadow: 0 16px 34px rgba(47, 72, 58, 0.16);
+  filter: brightness(1.01);
 }
 
 .songs-list li button:focus-visible {
@@ -460,19 +467,19 @@ h1 {
 }
 
 .modal-content {
-  width: min(580px, 96vw);
+  width: min(600px, 96vw);
   padding: 18px;
   position: relative;
 
-  background: rgba(255, 255, 255, 0.80);
+  background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.60);
   border-radius: var(--radius);
   box-shadow: var(--shadow-strong);
 }
 
 .modal-content.large {
-  width: min(720px, 96vw);
+  width: min(740px, 96vw);
 }
 
 .icon-close {
@@ -497,6 +504,10 @@ h1 {
   transform: translateY(-1px);
 }
 
+.icon-close:active {
+  transform: translateY(0px);
+}
+
 .hint {
   color: var(--muted);
   margin: 8px 0 12px;
@@ -516,7 +527,7 @@ h1 {
 }
 
 .import-summary {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.72);
   border-radius: 10px;
   border: 1px solid #e5eee2;
   color: #3b3f36;
@@ -526,13 +537,16 @@ h1 {
   min-height: 62px;
 }
 
+/* =========================
+   TONS (MELHOR VISUAL + LEGIBILIDADE)
+   ========================= */
+
 .key-grid {
   margin-top: 14px;
   display: grid;
   gap: 12px;
 }
 
-/* ===== CAMPOS DE TONALIDADE (MELHORADOS) ===== */
 .key-field {
   display: flex;
   flex-direction: column;
@@ -541,40 +555,51 @@ h1 {
 
 .key-field label {
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #1f3a2f;
+  color: #163428;
 
   background: linear-gradient(
     135deg,
-    rgba(46, 125, 94, 0.12),
-    rgba(46, 125, 94, 0.05)
+    rgba(47, 122, 95, 0.14),
+    rgba(120, 214, 176, 0.06)
   );
 
-  padding: 6px 12px;
-  border-radius: 8px;
-  border-left: 4px solid #2e7d5e;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 7px 12px;
+  border-radius: 10px;
+
+  border: 1px solid rgba(47, 122, 95, 0.14);
+  border-left: 4px solid rgba(47, 122, 95, 0.75);
+
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .key-field input {
-  height: 42px;
+  height: 44px;
   padding: 0 14px;
   border-radius: 12px;
   border: 1px solid rgba(0, 0, 0, 0.10);
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.90);
   color: var(--text);
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 0.98rem;
+  font-weight: 650;
   outline: none;
+
   transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.12s ease, filter 0.2s ease;
 }
 
 .key-field input:focus {
-  border-color: var(--primary);
+  border-color: rgba(47, 122, 95, 0.75);
   box-shadow: var(--ring);
   transform: translateY(-1px);
+  filter: brightness(1.01);
+}
+
+.key-field input::placeholder {
+  color: rgba(111, 115, 104, 0.75);
 }
 
 .detail-actions {
