@@ -887,3 +887,50 @@ body:has(.modal:not(.hidden)) {
   z-index: 5;
 }
 
+/* =========================
+   BOTÕES FLUTUANTES PREMIUM
+   ========================= */
+
+/* remove o sticky antigo se existir */
+.detail-actions {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  width: min(560px, 92vw);
+
+  display: flex;
+  gap: 12px;
+
+  padding: 12px;
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.6);
+
+  box-shadow:
+    0 25px 60px rgba(0,0,0,0.18),
+    0 10px 25px rgba(47,122,95,0.15);
+
+  z-index: 100;
+}
+
+/* deixa os botões mais fortes visualmente */
+.detail-actions .btn {
+  flex: 1;
+  min-height: 52px;
+  font-size: 1rem;
+  font-weight: 800;
+  border-radius: 14px;
+}
+
+/* efeito de elevação ao tocar */
+.detail-actions .btn:active {
+  transform: scale(0.98);
+}
+
+/* cria espaço no final do modal pra não cortar conteúdo */
+.modal-content {
+  padding-bottom: 110px;
+}
