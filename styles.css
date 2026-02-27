@@ -22,11 +22,12 @@
   --glow-cyan: rgba(120, 214, 176, 0.35);
   --glow-pink: rgba(255, 196, 170, 0.30);
   --glow-gold: rgba(255, 214, 165, 0.28);
+
+  /* altura do “dock” de botões no modal (pra não cobrir conteúdo) */
+  --actions-h: 86px;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -41,7 +42,6 @@ body {
 /* =========================
    FUNDO CHAMATIVO
    ========================= */
-
 body::before {
   content: "";
   position: fixed;
@@ -155,19 +155,12 @@ body::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .aurora,
-  .aurora::before,
-  .aurora::after,
-  body::before,
-  body::after {
-    animation: none !important;
-  }
+  .aurora, .aurora::before, .aurora::after, body::before, body::after { animation: none !important; }
 }
 
 /* =========================
    CONTEÚDO (acima do fundo)
    ========================= */
-
 .app-header,
 .app-main {
   width: min(980px, 92vw);
@@ -188,7 +181,6 @@ body::after {
   gap: 14px;
 }
 
-/* ✅ LOGO PNG TRANSPARENTE (acabamento premium) */
 .brand-logo,
 .brand-fallback {
   width: 60px;
@@ -197,7 +189,6 @@ body::after {
   flex: 0 0 auto;
 }
 
-/* A placa (glass) é o que faz PNG ficar bonito no fundo */
 .brand-logo {
   display: block;
   object-fit: contain;
@@ -223,12 +214,7 @@ body::after {
   box-shadow: 0 14px 30px rgba(47, 72, 58, 0.18);
 }
 
-h1,
-h2,
-h3,
-p {
-  margin: 0;
-}
+h1, h2, h3, p { margin: 0; }
 
 h1 {
   font-size: 1.32rem;
@@ -257,10 +243,7 @@ h1 {
 /* =========================
    CONTROLES
    ========================= */
-
-.controls {
-  padding: 16px;
-}
+.controls { padding: 16px; }
 
 .input-label {
   display: block;
@@ -307,7 +290,6 @@ h1 {
 /* =========================
    BOTÕES
    ========================= */
-
 .btn {
   border: 0;
   border-radius: 12px;
@@ -319,9 +301,7 @@ h1 {
   overflow: hidden;
 }
 
-.btn:active {
-  transform: translateY(1px);
-}
+.btn:active { transform: translateY(1px); }
 
 .btn:focus-visible {
   outline: none;
@@ -338,12 +318,7 @@ h1 {
   content: "";
   position: absolute;
   inset: -60% -70%;
-  background: linear-gradient(
-    120deg,
-    transparent 35%,
-    rgba(255, 255, 255, 0.55) 50%,
-    transparent 65%
-  );
+  background: linear-gradient(120deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
   transform: translateX(-55%);
   animation: shimmer 2.6s ease-in-out infinite;
   opacity: 0.65;
@@ -388,10 +363,7 @@ h1 {
 /* =========================
    LISTA
    ========================= */
-
-.list-wrap {
-  padding: 16px;
-}
+.list-wrap { padding: 16px; }
 
 .list-header {
   display: flex;
@@ -449,26 +421,26 @@ h1 {
 }
 
 /* =========================
-   MODAIS
+   MODAIS (SEM BRIGA / MOBILE OK)
    ========================= */
-
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(25, 20, 46, 0.45);
+  z-index: 50;
+
+  /* a rolagem tem que acontecer NO modal-content, não no fundo */
   display: grid;
   place-items: center;
   padding: 14px;
-  z-index: 20;
+
+  background: rgba(25, 20, 46, 0.45);
+  overflow: hidden;
 }
 
-.hidden {
-  display: none !important;
-}
+.hidden { display: none !important; }
 
 .modal-content {
   width: min(600px, 96vw);
-  padding: 18px;
   position: relative;
 
   background: rgba(255, 255, 255, 0.82);
@@ -476,6 +448,20 @@ h1 {
   border: 1px solid rgba(255, 255, 255, 0.60);
   border-radius: var(--radius);
   box-shadow: var(--shadow-strong);
+
+  padding: 18px;
+
+  /* IMPORTANTÍSSIMO: rolar por dentro */
+  max-height: 92vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+
+  /* espaço reservado pros botões flutuantes (pra não cobrir campos) */
+  padding-bottom: calc(var(--actions-h) + env(safe-area-inset-bottom, 0px) + 28px);
+
+  /* para o brilho não estourar o layout */
+  overflow-x: hidden;
 }
 
 .modal-content.large {
@@ -483,9 +469,12 @@ h1 {
 }
 
 .icon-close {
-  position: absolute;
+  position: sticky;
   top: 8px;
-  right: 8px;
+  margin-left: auto;
+  display: grid;
+  place-items: center;
+
   border: 0;
   width: 34px;
   height: 34px;
@@ -496,6 +485,7 @@ h1 {
   font-size: 1.4rem;
   color: #1f4f3d;
   transition: transform 0.12s ease, filter 0.2s ease, box-shadow 0.2s ease;
+  z-index: 2;
 }
 
 .icon-close:hover {
@@ -504,19 +494,11 @@ h1 {
   transform: translateY(-1px);
 }
 
-.icon-close:active {
-  transform: translateY(0px);
-}
+.icon-close:active { transform: translateY(0px); }
 
-.hint {
-  color: var(--muted);
-  margin: 8px 0 12px;
-}
+.hint { color: var(--muted); margin: 8px 0 12px; }
 
-.full {
-  width: 100%;
-  margin-top: 12px;
-}
+.full { width: 100%; margin-top: 12px; }
 
 .checkbox-wrap {
   display: flex;
@@ -538,9 +520,8 @@ h1 {
 }
 
 /* =========================
-   TONS (MELHOR VISUAL + LEGIBILIDADE)
+   TONS (CARDS PREMIUM + LEGIBILIDADE)
    ========================= */
-
 .key-grid {
   margin-top: 14px;
   display: grid;
@@ -550,107 +531,11 @@ h1 {
 .key-field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-}
+  gap: 8px;
 
-.key-field label {
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #163428;
-
-  background: linear-gradient(
-    135deg,
-    rgba(47, 122, 95, 0.14),
-    rgba(120, 214, 176, 0.06)
-  );
-
-  padding: 7px 12px;
-  border-radius: 10px;
-
-  border: 1px solid rgba(47, 122, 95, 0.14);
-  border-left: 4px solid rgba(47, 122, 95, 0.75);
-
-  box-shadow:
-    0 6px 16px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
-}
-
-.key-field input {
-  height: 44px;
-  padding: 0 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.10);
-  background: rgba(255, 255, 255, 0.90);
-  color: var(--text);
-  font-size: 0.98rem;
-  font-weight: 650;
-  outline: none;
-
-  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.12s ease, filter 0.2s ease;
-}
-
-.key-field input:focus {
-  border-color: rgba(47, 122, 95, 0.75);
-  box-shadow: var(--ring);
-  transform: translateY(-1px);
-  filter: brightness(1.01);
-}
-
-.key-field input::placeholder {
-  color: rgba(111, 115, 104, 0.75);
-}
-
-.detail-actions {
-  margin-top: 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-/* =========================
-   TOAST
-   ========================= */
-
-.toast {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%) translateY(120%);
-  bottom: 16px;
-  background: #213128;
-  color: #fff;
-  border-radius: 10px;
-  padding: 10px 14px;
-  transition: transform 0.25s ease;
-  z-index: 30;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
-}
-
-.toast.show {
-  transform: translateX(-50%) translateY(0);
-}
-
-@media (min-width: 760px) {
-  .key-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-/* =========================
-   PATCH: "CARDS" PREMIUM NOS NOMES (labels) DOS TONS
-   (não mexe em JS/HTML)
-   ========================= */
-
-/* deixa cada campo como um mini-card */
-.key-field {
   padding: 10px 10px 12px;
   border-radius: 14px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.70),
-    rgba(255, 255, 255, 0.42)
-  );
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.70), rgba(255, 255, 255, 0.42));
   border: 1px solid rgba(47, 122, 95, 0.14);
   box-shadow:
     0 14px 34px rgba(47, 72, 58, 0.10),
@@ -658,7 +543,6 @@ h1 {
   backdrop-filter: blur(10px);
 }
 
-/* a “placa” do nome vira um cardzinho com brilho elegante */
 .key-field label {
   position: relative;
   display: inline-flex;
@@ -686,32 +570,40 @@ h1 {
     inset 0 1px 0 rgba(255,255,255,0.8);
 }
 
-/* um “selo” discreto na ponta, dá sensação de design de produto */
 .key-field label::after {
   content: "";
   margin-left: 10px;
   width: 10px;
   height: 10px;
   border-radius: 999px;
-
   background: radial-gradient(circle at 35% 35%, #fff, rgba(120,214,176,0.95));
   box-shadow:
     0 0 0 3px rgba(47,122,95,0.10),
     0 10px 18px rgba(47,72,58,0.12);
 }
 
-/* input mais “encaixado” no card, mantendo seu estilo */
 .key-field input {
+  height: 44px;
+  padding: 0 14px;
   border-radius: 12px;
   border: 1px solid rgba(0, 0, 0, 0.10);
   background: rgba(255, 255, 255, 0.92);
+  color: var(--text);
+  font-size: 0.98rem;
+  font-weight: 650;
+  outline: none;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.12s ease, filter 0.2s ease;
 }
+
+.key-field input::placeholder { color: rgba(111, 115, 104, 0.75); }
 
 .key-field input:focus {
   border-color: rgba(47, 122, 95, 0.75);
+  box-shadow: var(--ring);
+  transform: translateY(-1px);
+  filter: brightness(1.01);
 }
 
-/* hover suave no card, sem exagero */
 @media (hover: hover) {
   .key-field:hover {
     transform: translateY(-1px);
@@ -723,55 +615,47 @@ h1 {
 }
 
 /* =========================
-   PATCH MOBILE – BOTÕES VISÍVEIS NO MODAL
+   BOTÕES FLUTUANTES (SEM MOLDURA / NÃO COBRE CONTEÚDO)
    ========================= */
-
-/* permite rolagem interna no modal no celular */
-.modal-content {
-  max-height: 90vh;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* deixa os botões sempre visíveis no final */
 .detail-actions {
-  position: sticky;
-  bottom: 0;
-  background: linear-gradient(
-    to top,
-    rgba(255,255,255,0.95),
-    rgba(255,255,255,0.85)
-  );
-  padding-top: 12px;
-  padding-bottom: 8px;
-  margin-top: 18px;
-  z-index: 5;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
+  width: min(560px, 92vw);
+
+  display: flex;
+  gap: 14px;
+
+  /* sem container branco */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  padding: 0;
+  margin: 0;
+
+  z-index: 9999;
 }
 
-/* melhora clique no celular */
 .detail-actions .btn {
   flex: 1;
-  min-height: 48px;
-  font-size: 0.95rem;
+  min-height: 54px;
+  font-size: 1rem;
+  font-weight: 800;
+  border-radius: 16px;
+
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.18),
+    0 8px 20px rgba(47,122,95,0.18);
 }
 
-/* garante espaço extra no final para não cortar */
-.modal-content::after {
-  content: "";
-  display: block;
-  height: 12px;
-}
+.detail-actions .btn:active { transform: scale(0.985); }
 
 /* =========================
-   FUNDO ANIMADO BRILHANTE NO MODAL
-   (não altera nada existente)
+   BRILHO ANIMADO NO MODAL (real)
    ========================= */
-
-.modal {
-  overflow: hidden;
-}
-
-/* camada brilhante animada */
 .modal::before {
   content: "";
   position: absolute;
@@ -786,268 +670,36 @@ h1 {
 
   filter: blur(60px);
   animation: modalGlowMove 8s ease-in-out infinite alternate;
+  opacity: 0.95;
+}
+
+@keyframes modalGlowMove {
+  0% { transform: translate3d(0,0,0) scale(1); }
+  100% { transform: translate3d(-3%,2%,0) scale(1.08); }
 }
 
 /* garante que o conteúdo fique acima do brilho */
-.modal-content {
-  position: relative;
-  z-index: 1;
-}
-
-/* animação suave */
-@keyframes modalGlowMove {
-  0% {
-    transform: translate3d(0,0,0) scale(1);
-  }
-  100% {
-    transform: translate3d(-3%,2%,0) scale(1.08);
-  }
-}
+.modal-content { z-index: 1; }
 
 /* =========================
-   FUNDO BRILHANTE REAL NO MODAL (PRO)
+   TOAST
    ========================= */
-
-.modal-content {
-  position: relative;
-  overflow: hidden;
-}
-
-/* camada animada interna */
-.modal-content::before {
-  content: "";
-  position: absolute;
-  inset: -30%;
-  z-index: 0;
-  pointer-events: none;
-
-  background:
-    radial-gradient(circle at 15% 20%, rgba(120,214,176,0.45), transparent 45%),
-    radial-gradient(circle at 85% 30%, rgba(47,122,95,0.35), transparent 50%),
-    radial-gradient(circle at 50% 85%, rgba(255,214,165,0.30), transparent 55%);
-
-  filter: blur(55px);
-  opacity: 0.9;
-  animation: modalAura 6s ease-in-out infinite alternate;
-}
-
-/* garante que o conteúdo fique acima */
-.modal-content > * {
-  position: relative;
-  z-index: 1;
-}
-
-@keyframes modalAura {
-  0% {
-    transform: translate3d(0,0,0) scale(1);
-  }
-  100% {
-    transform: translate3d(-4%,3%,0) scale(1.12);
-  }
-}
-
-/* =========================
-   FIX DEFINITIVO DO MODAL MOBILE
-   ========================= */
-
-/* trava o fundo quando modal estiver aberto */
-body:has(.modal:not(.hidden)) {
-  overflow: hidden;
-}
-
-/* garante que o modal ocupe a tela inteira */
-.modal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-/* scroll acontece DENTRO do modal */
-.modal-content {
-  max-height: 92vh;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-}
-
-/* mantém os botões sempre visíveis */
-.detail-actions {
-  position: sticky;
-  bottom: 0;
-  background: linear-gradient(
-    to top,
-    rgba(255,255,255,0.98),
-    rgba(255,255,255,0.85)
-  );
-  padding-top: 12px;
-  padding-bottom: 10px;
-  z-index: 5;
-}
-
-/* =========================
-   BOTÕES FLUTUANTES PREMIUM
-   ========================= */
-
-/* remove o sticky antigo se existir */
-.detail-actions {
+.toast {
   position: fixed;
   left: 50%;
-  bottom: 18px;
-  transform: translateX(-50%);
-  width: min(560px, 92vw);
-
-  display: flex;
-  gap: 12px;
-
-  padding: 12px;
-  border-radius: 18px;
-
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255,255,255,0.6);
-
-  box-shadow:
-    0 25px 60px rgba(0,0,0,0.18),
-    0 10px 25px rgba(47,122,95,0.15);
-
-  z-index: 100;
+  transform: translateX(-50%) translateY(120%);
+  bottom: 16px;
+  background: #213128;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  transition: transform 0.25s ease;
+  z-index: 10000;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
 }
 
-/* deixa os botões mais fortes visualmente */
-.detail-actions .btn {
-  flex: 1;
-  min-height: 52px;
-  font-size: 1rem;
-  font-weight: 800;
-  border-radius: 14px;
-}
+.toast.show { transform: translateX(-50%) translateY(0); }
 
-/* efeito de elevação ao tocar */
-.detail-actions .btn:active {
-  transform: scale(0.98);
-}
-
-/* cria espaço no final do modal pra não cortar conteúdo */
-.modal-content {
-  padding-bottom: 110px;
-}
-
-/* =========================
-   REMOVE MOLDURA BRANCA DOS BOTÕES
-   ========================= */
-
-.detail-actions {
-  background: transparent !important;
-  backdrop-filter: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-}
-
-/* mantém eles flutuando, mas sem container branco */
-.detail-actions {
-  position: fixed;
-  left: 50%;
-  bottom: 20px;
-  transform: translateX(-50%);
-  width: min(560px, 92vw);
-  display: flex;
-  gap: 14px;
-  z-index: 100;
-}
-
-/* deixa cada botão com sombra individual */
-.detail-actions .btn {
-  flex: 1;
-  min-height: 52px;
-  font-size: 1rem;
-  font-weight: 800;
-  border-radius: 16px;
-
-  box-shadow:
-    0 18px 40px rgba(0,0,0,0.18),
-    0 8px 20px rgba(47,122,95,0.18);
-}
-
-/* espaço no final para não cortar conteúdo */
-.modal-content {
-  padding-bottom: 110px;
-}
-
-/* =========================
-   AJUSTE POSIÇÃO BOTÕES FLUTUANTES
-   ========================= */
-
-.detail-actions {
-  bottom: 8px !important; /* desce mais */
-}
-
-/* aumenta espaço interno do modal para não cobrir conteúdo */
-.modal-content {
-  padding-bottom: 140px !important;
-}
-
-/* =========================
-   FIX FINAL (MOBILE)
-   - Botões flutuantes NÃO cobrem o último campo
-   - Respeita safe-area (barra do celular)
-   - Não muda JS/HTML
-   ========================= */
-
-:root{
-  --actions-height: 92px; /* espaço reservado pros botões */
-}
-
-/* mantém flutuando, mas colado no fundo real do celular */
-.detail-actions{
-  position: fixed !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-
-  /* desce de verdade (safe-area + margem) */
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 10px) !important;
-
-  width: min(560px, 92vw) !important;
-  display: flex !important;
-  gap: 14px !important;
-
-  z-index: 9999 !important;
-  margin: 0 !important;
-
-  /* sem “moldura” */
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  padding: 0 !important;
-}
-
-/* cada botão com sombra própria (sem container branco) */
-.detail-actions .btn{
-  flex: 1 !important;
-  min-height: 54px !important;
-  font-size: 1rem !important;
-  font-weight: 800 !important;
-  border-radius: 16px !important;
-
-  box-shadow:
-    0 18px 40px rgba(0,0,0,0.18),
-    0 8px 20px rgba(47,122,95,0.18) !important;
-}
-
-/* o pulo do gato:
-   reserva espaço DENTRO do modal pra nada ficar embaixo dos botões */
-.modal-content{
-  padding-bottom: calc(var(--actions-height) + env(safe-area-inset-bottom, 0px) + 40px) !important;
-}
-
-/* garante que o modal role por dentro (e não o fundo) */
-.modal-content{
-  max-height: 92vh !important;
-  overflow-y: auto !important;
-  -webkit-overflow-scrolling: touch !important;
-  overscroll-behavior: contain !important;
+@media (min-width: 760px) {
+  .key-grid { grid-template-columns: 1fr 1fr; }
 }
