@@ -845,3 +845,45 @@ h1 {
     transform: translate3d(-4%,3%,0) scale(1.12);
   }
 }
+
+/* =========================
+   FIX DEFINITIVO DO MODAL MOBILE
+   ========================= */
+
+/* trava o fundo quando modal estiver aberto */
+body:has(.modal:not(.hidden)) {
+  overflow: hidden;
+}
+
+/* garante que o modal ocupe a tela inteira */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* scroll acontece DENTRO do modal */
+.modal-content {
+  max-height: 92vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* mantém os botões sempre visíveis */
+.detail-actions {
+  position: sticky;
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(255,255,255,0.98),
+    rgba(255,255,255,0.85)
+  );
+  padding-top: 12px;
+  padding-bottom: 10px;
+  z-index: 5;
+}
+
