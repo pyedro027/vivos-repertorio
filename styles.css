@@ -864,3 +864,57 @@ h1 {
     0 10px 22px rgba(47,72,58,0.10),
     inset 0 1px 0 rgba(255,255,255,0.70);
 }
+
+/* =========================
+   WORSHIP STYLE — TÍTULO "MÚSICAS"
+   Só visual. Não altera layout.
+   ========================= */
+
+.list-header h2 {
+  position: relative;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+
+  /* leve brilho dourado no texto */
+  background: linear-gradient(
+    90deg,
+    #1f3f32,
+    #2f7a5f 35%,
+    #cfa95e 55%,
+    #2f7a5f 75%,
+    #1f3f32
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: titleGlow 6s ease-in-out infinite;
+}
+
+/* linha elegante abaixo do título */
+.list-header h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 48px;
+  height: 3px;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255, 214, 165, 0.9),
+    rgba(120, 214, 176, 0.9)
+  );
+
+  box-shadow:
+    0 4px 12px rgba(255, 214, 165, 0.35),
+    0 2px 8px rgba(47, 122, 95, 0.25);
+}
+
+/* animação sutil no degradê */
+@keyframes titleGlow {
+  0%   { background-position: 0% center; }
+  50%  { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
