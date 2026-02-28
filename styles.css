@@ -918,3 +918,32 @@ h1 {
   50%  { background-position: 100% center; }
   100% { background-position: 0% center; }
 }
+/* =========================
+   SEPARADOR ELEGANTE ENTRE MÚSICAS
+   Só visual. Não altera layout.
+   ========================= */
+
+.songs-list li {
+  position: relative;
+}
+
+/* linha ultra sutil entre os cards */
+.songs-list li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: -4px;
+  height: 1px;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(47, 122, 95, 0.18),
+    rgba(255, 214, 165, 0.18),
+    transparent
+  );
+
+  opacity: 0.6;
+}
