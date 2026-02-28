@@ -1046,3 +1046,73 @@ body::after {
     transform: translate3d(3%,-2%,0) scale(1.08);
   }
 }
+
+/* =========================
+   FUNDO ANIMADO VISÍVEL (usa .bg-fx do seu HTML)
+   Só visual. Não altera layout nem modal.
+   ========================= */
+
+.bg-fx{
+  position: fixed;
+  inset: -25%;
+  z-index: 0;
+  pointer-events: none;
+
+  opacity: 0.9;
+  filter: blur(50px) saturate(120%);
+  transform: translate3d(0,0,0);
+}
+
+/* Camada 1: aurora que se mexe */
+.bg-fx::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(circle at 18% 25%, rgba(120,214,176,0.35), transparent 45%),
+    radial-gradient(circle at 78% 30%, rgba(47,122,95,0.32), transparent 48%),
+    radial-gradient(circle at 50% 78%, rgba(255,214,165,0.26), transparent 52%),
+    radial-gradient(circle at 88% 80%, rgba(255,196,170,0.18), transparent 55%);
+
+  animation: bgAuroraMove 14s ease-in-out infinite alternate;
+}
+
+/* Camada 2: brilho rotacionando bem de leve (dá “vida” mesmo) */
+.bg-fx::after{
+  content:"";
+  position:absolute;
+  inset: 0;
+
+  background:
+    conic-gradient(
+      from 180deg,
+      rgba(255,214,165,0.16),
+      rgba(120,214,176,0.14),
+      rgba(47,122,95,0.16),
+      rgba(255,196,170,0.12),
+      rgba(255,214,165,0.16)
+    );
+
+  opacity: 0.55;
+  animation: bgSlowSpin 26s linear infinite;
+  mix-blend-mode: soft-light;
+}
+
+@keyframes bgAuroraMove{
+  0%   { transform: translate3d(0,0,0) scale(1); }
+  50%  { transform: translate3d(-3%,2%,0) scale(1.06); }
+  100% { transform: translate3d(3%,-2%,0) scale(1.10); }
+}
+
+@keyframes bgSlowSpin{
+  0%   { transform: rotate(0deg) scale(1.02); }
+  100% { transform: rotate(360deg) scale(1.02); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .bg-fx::before,
+  .bg-fx::after{
+    animation: none !important;
+  }
+}
