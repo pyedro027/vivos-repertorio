@@ -947,3 +947,67 @@ h1 {
 
   opacity: 0.6;
 }
+
+/* =========================
+   EMPTY STATE PREMIUM (WORSHIP)
+   Só visual. Não mexe em JS/HTML.
+   ========================= */
+
+.empty-state {
+  display: none; /* o JS que liga/desliga, então mantém */
+  margin: 14px 0 6px;
+  padding: 16px 14px;
+  text-align: center;
+
+  color: #1f3a2f;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+
+  border-radius: 16px;
+  border: 1px solid rgba(47, 122, 95, 0.16);
+
+  background:
+    radial-gradient(circle at 18% 20%, rgba(255, 214, 165, 0.22), transparent 55%),
+    radial-gradient(circle at 85% 35%, rgba(120, 214, 176, 0.20), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.68));
+
+  box-shadow:
+    0 18px 44px rgba(47, 72, 58, 0.12),
+    inset 0 1px 0 rgba(255,255,255,0.75);
+
+  backdrop-filter: blur(10px);
+}
+
+/* ícone/selo discreto */
+.empty-state::before {
+  content: "✦";
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin: 0 auto 10px;
+
+  border-radius: 999px;
+  color: #123125;
+  font-size: 16px;
+
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.85), transparent 55%),
+    linear-gradient(135deg, rgba(255, 214, 165, 0.38), rgba(120, 214, 176, 0.18));
+
+  border: 1px solid rgba(47, 122, 95, 0.14);
+
+  box-shadow:
+    0 10px 22px rgba(47,72,58,0.10),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+/* texto mais “calmo” no final */
+.empty-state::after {
+  content: "Tenta outra busca ou adicione uma nova música.";
+  display: block;
+  margin-top: 6px;
+  font-weight: 600;
+  color: rgba(31, 58, 47, 0.72);
+  letter-spacing: 0;
+}
